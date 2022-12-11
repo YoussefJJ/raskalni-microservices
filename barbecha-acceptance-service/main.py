@@ -1,17 +1,17 @@
-from kafka import KafkaConsumer, KafkaProducer
+from kafka import KafkaConsumer
 import sys
 import sqlite3
 import json
 
 
 # Create a Kafka consumer to read data from a Kafka topic
-consumer = KafkaConsumer('my-topic', bootstrap_servers=['localhost:9092'])
-producer = KafkaProducer(
-    bootstrap_servers=['localhost:9092'])
+consumer = KafkaConsumer('barbecha-acceptance-topic',
+                         bootstrap_servers=['localhost:9092'])
 # connect to database
 conn = sqlite3.connect('data.db')
 
 # create table if not exists
+# For the status it's either accepted 'A', or rejected 'R'
 conn.execute('''CREATE TABLE IF NOT EXISTS data
             (id INTEGER PRIMARY KEY AUTOINCREMENT,
             sex TEXT,
@@ -19,7 +19,8 @@ conn.execute('''CREATE TABLE IF NOT EXISTS data
             experience INTEGER,
             salary double,
             duration INTEGER,
-            timestamp DATETIME DEFAULT CURRENT_TIMESTAMP
+            timestamp DATETIME DEFAULT CURRENT_TIMESTAMP,
+            status TEXT CHECK ( status IN ('A', 'R') ) NOT NULL
             );''')
 
 
@@ -32,30 +33,19 @@ for msg in consumer:
     data = msg.value.decode('utf-8')
     data = json.loads(data)
     print(data)
-    # # save object to database
+
+    # Extract infromation
     age = data['age']
     sex = data['sex']
     experience = data['experience']
     salary = data['salary']
     duration = data['duration']
     timestamp = data['timestamp']
+    status = 'A' if salary < 2000 else 'R'
 
-    conn.execute("INSERT INTO data (age, sex, experience, salary, duration, timestamp) VALUES (?, ?, ?, ?, ?, ?)",
-                 (age, sex, experience, salary, duration, timestamp))
+    # # save object to database
+    conn.execute("INSERT INTO data (age, sex, experience, salary, duration, timestamp, status) VALUES (?, ?, ?, ?, ?, ?, ?)",
+                 (age, sex, experience, salary, duration, timestamp, status))
     conn.commit()
-
-    # In our case the employee is a barbech
-    employee = {
-        "age": age,
-        "sex": sex,
-        "experience": experience,
-        "salary": salary,
-        "duration": duration,
-        "timestamp": timestamp
-    }
-    print(employee)
-    producer.send('barbecha-acceptance-topic',
-                  json.dumps(employee).encode('utf-8'))
-
 
 sys.exit()
