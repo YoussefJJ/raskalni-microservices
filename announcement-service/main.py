@@ -1,7 +1,6 @@
 from kafka import KafkaConsumer
 import sys
 import sqlite3
-import uuid
 import json
 
 
