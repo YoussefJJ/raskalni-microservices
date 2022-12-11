@@ -50,17 +50,17 @@ for msg in consumer:
     conn.execute("INSERT INTO employees (age, sex, experience, salary, duration, timestamp, status) VALUES (?, ?, ?, ?, ?, ?, ?)",
                  (age, sex, experience, salary, duration, timestamp, status))
     conn.commit()
-
-    # In our case the employee is a barbech
-    employee = {
-        "age": age,
-        "sex": sex,
-        "experience": experience,
-        "salary": salary,
-        "duration": duration,
-        "timestamp": timestamp
-    }
-    producer.send('insurance-topic',
-                  json.dumps(employee).encode('utf-8'))
+    if status == 'A':
+        # In our case the employee is a barbech
+        employee = {
+            "age": age,
+            "sex": sex,
+            "experience": experience,
+            "salary": salary,
+            "duration": duration,
+            "timestamp": timestamp
+        }
+        producer.send('insurance-topic',
+                      json.dumps(employee).encode('utf-8'))
 
 sys.exit()
