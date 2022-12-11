@@ -39,11 +39,18 @@ def handle_post_request():
     pdf = FPDF()
     pdf.add_page()
     pdf.set_font('Arial', 'B', 16)
-    pdf.cell(40, 10, f'Age: {age}')
-    pdf.cell(40, 10, f'Sex: {sex}')
-    pdf.cell(40, 10, f'Experience: {experience}')
-    pdf.cell(40, 10, f'Salary: {salary}')
-    pdf.cell(40, 10, f'Duration: {duration}')
+    # add title centered, bigger font
+    pdf.cell(200, 10, txt='Rasklani', ln=1, align='C')
+    # add subtitle
+    pdf.cell(200, 10, txt='Recruitment needs', ln=1, align='C')
+
+    pdf.set_font('Arial', '', 12)
+
+    # print data line by line
+    for key, value in data.items():
+        pdf.cell(200, 10, txt=f'{key}: {value}', ln=1, align='L')
+
+
     pdf.output('data.pdf', 'F')
 
     # Return a response to the client
