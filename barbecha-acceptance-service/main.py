@@ -1,4 +1,4 @@
-from kafka import KafkaConsumer
+from kafka import KafkaConsumer, KafkaProducer
 import sys
 import sqlite3
 import json
@@ -7,12 +7,15 @@ import json
 # Create a Kafka consumer to read data from a Kafka topic
 consumer = KafkaConsumer('barbecha-acceptance-topic',
                          bootstrap_servers=['localhost:9092'])
+
+producer = KafkaProducer(
+    bootstrap_servers=['localhost:9092'])
 # connect to database
-conn = sqlite3.connect('data.db')
+conn = sqlite3.connect('employees.db')
 
 # create table if not exists
 # For the status it's either accepted 'A', or rejected 'R'
-conn.execute('''CREATE TABLE IF NOT EXISTS data
+conn.execute('''CREATE TABLE IF NOT EXISTS employees 
             (id INTEGER PRIMARY KEY AUTOINCREMENT,
             sex TEXT,
             age INTEGER,
@@ -44,8 +47,20 @@ for msg in consumer:
     status = 'A' if salary < 2000 else 'R'
 
     # # save object to database
-    conn.execute("INSERT INTO data (age, sex, experience, salary, duration, timestamp, status) VALUES (?, ?, ?, ?, ?, ?, ?)",
+    conn.execute("INSERT INTO employees (age, sex, experience, salary, duration, timestamp, status) VALUES (?, ?, ?, ?, ?, ?, ?)",
                  (age, sex, experience, salary, duration, timestamp, status))
     conn.commit()
+
+    # In our case the employee is a barbech
+    employee = {
+        "age": age,
+        "sex": sex,
+        "experience": experience,
+        "salary": salary,
+        "duration": duration,
+        "timestamp": timestamp
+    }
+    producer.send('insurance-topic',
+                  json.dumps(employee).encode('utf-8'))
 
 sys.exit()
