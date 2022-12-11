@@ -1,4 +1,4 @@
-from flask import Flask, request
+from flask import Flask, request, jsonify
 import json
 from datetime import datetime
 from kafka import KafkaProducer
@@ -9,18 +9,18 @@ app = Flask(__name__)
 # Create a Kafka producer to send data to a Kafka topic
 producer = KafkaProducer(bootstrap_servers='localhost:9092')
 
+
 @app.route('/', methods=['POST'])
 def handle_post_request():
     # Get the request data as a JSON object
     req_data = request.get_json()
-    
+
     # Extract the fields from the request data
     age = req_data['age']
     sex = req_data['sex']
     experience = req_data['experience']
     salary = req_data['salary']
     duration = req_data['duration']
-
     # Add a timestamp and sender information to the data
     data = {
         'timestamp': datetime.now().strftime('%Y-%m-%d %H:%M:%S'),
@@ -50,13 +50,13 @@ def handle_post_request():
     for key, value in data.items():
         pdf.cell(200, 10, txt=f'{key}: {value}', ln=1, align='L')
 
-
     pdf.output('data.pdf', 'F')
 
     # Return a response to the client
     return json.dumps({
         'success': True
     })
+
 
 if __name__ == '__main__':
     app.run()
