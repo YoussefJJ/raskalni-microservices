@@ -33,7 +33,7 @@
                 <form action="/request" method="POST" class="flex flex-col justify-center items-center w-1/2">
                     <div class="flex flex-col justify-center items-center w-full">
                         <label for="age" class="text-lg text-green-700 font-bold">Age</label>
-                        <input type="number" name="age" id="age" class="w-full border-2 border-green-700 rounded-full p-2">
+                        <input type="number" name="age" id="age" min="0" class="w-full border-2 border-green-700 rounded-full p-2">
                     </div>
                     <div class="flex space-x-3 justify-around items-center w-full">
                         <div>
@@ -51,19 +51,24 @@
                     </div>
                     <div class="flex flex-col justify-center items-center w-full">
                         <label for="salary" class="text-lg text-green-700 font-bold">Salary</label>
-                        <input type="number" name="salary" id="salary" class="w-full border-2 border-green-700 rounded-full p-2">
+                        <input type="number" name="salary" id="salary" min="0" class="w-full border-2 border-green-700 rounded-full p-2">
                     </div>
                     <div class="flex flex-col justify-center items-center w-full">
                         <label for="experience" class="text-lg text-green-700 font-bold">Years of experience</label>
-                        <input type="number" name="experience" id="experience" class="w-full border-2 border-green-700 rounded-full p-2">
+                        <input type="number" name="experience" id="experience" min="0" class="w-full border-2 border-green-700 rounded-full p-2">
+                    </div>
+                    <div class="flex flex-col justify-center items-center w-full">
+                        <label for="experience" class="text-lg text-green-700 font-bold">Duration (in months)</label>
+                        <input type="number" name="duration" id="duration" min="0" class="w-full border-2 border-green-700 rounded-full p-2">
                     </div>
                     <div class="flex justify-center items-center w-full">
-                        <button type="submit" class="text-white bg-green-700 font-bold py-2 px-4 hover:bg-green-800 rounded-full">Submit</button>
+                        <button id="submit-btn" type="submit" class="text-white bg-green-700 font-bold py-2 px-4 hover:bg-green-800 rounded-full">Submit</button>
                     </div>
                 </form>
             </div>
         </div>
     </section>
 </body>
+<script src="../node_modules/jquery/dist/jquery.js"></script>
 <script src="../public/js/form.js"></script>
 </html>

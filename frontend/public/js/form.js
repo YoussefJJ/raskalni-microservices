@@ -1,23 +1,23 @@
-$(document).ready(function () {
-    $("form").submit(function (event) {
+$("#submit-btn").on("click", function (event) {
+    event.preventDefault();
+    console.log("here")
       var formData = {
-        name: $("#age").val(),
-        email: $("#sex").val(),
+        age: $("#age").val(),
+        sex: $("input[name=sex]:checked").val(),
         description: $("#description").val(),
         salary: $("#salary").val(),
         experience: $("#experience").val(),
+        duration: $("#duration").val(),
       };
   
-    //   $.ajax({
-    //     type: "POST",
-    //     url: "process.php",
-    //     data: formData,
-    //     dataType: "json",
-    //     encode: true,
-    //   }).done(function (data) {
-    //     console.log(data);
-    //   });
+      $.ajax({
+        type: "POST",
+        url: "http://localhost:5000",
+        data: formData,
+        dataType: "json",
+        encode: true,
+      }).done(function (data) {
+        console.log(data);
+      });
       console.log(formData)
-      event.preventDefault();
-    });
   });
