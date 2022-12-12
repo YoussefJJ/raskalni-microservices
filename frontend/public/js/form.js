@@ -17,7 +17,16 @@ $("#submit-btn").on("click", function (event) {
         dataType: "json",
         encode: true,
       }).done(function (data) {
-        console.log(data);
-      });
-      console.log(formData)
+        // add a success message
+        $("#success").empty();
+        // create message
+        var message = $("<h2>");
+        // add classes
+        message.addClass(["text-center", "text-success", "mt-5", "border-2", "bg-green-400", "border-green-900", "p-3"])
+        // add text
+        message.text("Success!");
+        $("#success").append(message);
+        // clear form
+        console.log(formData)
   });
+});
