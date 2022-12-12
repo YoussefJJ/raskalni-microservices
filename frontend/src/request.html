@@ -1,0 +1,69 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="../dist/output.css" rel="stylesheet">
+    <link href="../public/css/styles.css" rel="stylesheet">
+    <title>Document</title>
+</head>
+<body>
+    <nav class="h-20 bg-white w-full shadow-md p-3 ">
+        <div class="flex justify-between items-center">
+            <div class="flex space-x-4 items-center">
+                <div class="flex h-14 w-14">
+                    <img class="h-full w-full" src="../public/img/logo.png" alt="logo">
+                </div>
+                <h2 class="text-4xl text-green-700 font-bold">
+                    <a href="/">Raskalni</a>
+                </h2>
+            </div>
+            <div class="flex">
+                <div class="flex justify-end object-contain">
+                    <button class="text-white bg-green-700 font-bold py-2 px-4 hover:bg-green-800 rounded-full"><a href="/request">Make Request</a></button>
+                </div>
+            </div>
+        </div>
+    </nav>
+    <section>
+        <!-- Request form (age, sex, description, salary, years of experience) -->
+        <div class="flex justify-center items-center my-5">
+            <div class="flex flex-col justify-center items-center w-2/3">
+                <h1 class="text-4xl text-green-700 font-bold">Make a Request</h1>
+                <form action="/request" method="POST" class="flex flex-col justify-center items-center w-1/2">
+                    <div class="flex flex-col justify-center items-center w-full">
+                        <label for="age" class="text-lg text-green-700 font-bold">Age</label>
+                        <input type="number" name="age" id="age" class="w-full border-2 border-green-700 rounded-full p-2">
+                    </div>
+                    <div class="flex space-x-3 justify-around items-center w-full">
+                        <div>
+                            <input type="radio" id="male" name="sex" value="male">
+                            <label for="male">Male</label><br>
+                        </div>
+                        <div>
+                            <input type="radio" id="female" name="sex" value="female">
+                            <label for="female">Female</label><br>
+                        </div>
+                    </div>
+                    <div class="flex flex-col justify-center items-center w-full">
+                        <label for="description" class="text-lg text-green-700 font-bold">Description</label>
+                        <textarea name="description" id="description" cols="30" rows="10" class="w-full border-2 border-green-700 rounded-lg p-2"></textarea>
+                    </div>
+                    <div class="flex flex-col justify-center items-center w-full">
+                        <label for="salary" class="text-lg text-green-700 font-bold">Salary</label>
+                        <input type="number" name="salary" id="salary" class="w-full border-2 border-green-700 rounded-full p-2">
+                    </div>
+                    <div class="flex flex-col justify-center items-center w-full">
+                        <label for="experience" class="text-lg text-green-700 font-bold">Years of experience</label>
+                        <input type="number" name="experience" id="experience" class="w-full border-2 border-green-700 rounded-full p-2">
+                    </div>
+                    <div class="flex justify-center items-center w-full">
+                        <button type="submit" class="text-white bg-green-700 font-bold py-2 px-4 hover:bg-green-800 rounded-full">Submit</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </section>
+</body>
+<script src="../public/js/form.js"></script>
+</html>
