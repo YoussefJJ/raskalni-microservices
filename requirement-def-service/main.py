@@ -21,6 +21,7 @@ def handle_post_request():
     experience = req_data['experience']
     salary = req_data['salary']
     duration = req_data['duration']
+    description = req_data['description']
     # Add a timestamp and sender information to the data
     data = {
         'timestamp': datetime.now().strftime('%Y-%m-%d %H:%M:%S'),
@@ -29,7 +30,8 @@ def handle_post_request():
         'sex': sex,
         'experience': experience,
         'salary': salary,
-        'duration': duration
+        'duration': duration,
+        'description': description
     }
 
     # Send the data to a Kafka topic

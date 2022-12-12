@@ -18,6 +18,7 @@ conn.execute('''CREATE TABLE IF NOT EXISTS employees
             experience INTEGER,
             salary double,
             duration INTEGER,
+            description TEXT,
             timestamp DATETIME DEFAULT CURRENT_TIMESTAMP
             );''')
 
@@ -38,11 +39,12 @@ for msg in consumer:
     experience = data['experience']
     salary = data['salary']
     duration = data['duration']
+    description = data['description']
     timestamp = data['timestamp']
 
     # # save object to database
-    conn.execute("INSERT INTO employees (age, sex, experience, salary, duration, timestamp) VALUES (?, ?, ?, ?, ?, ?)",
-                 (age, sex, experience, salary, duration, timestamp))
+    conn.execute("INSERT INTO employees (age, sex, experience, salary, duration, description, timestamp) VALUES (?, ?, ?, ?, ?, ?, ?)",
+                 (age, sex, experience, salary, duration, description, timestamp))
     conn.commit()
 
 sys.exit()

@@ -19,6 +19,7 @@ conn.execute('''CREATE TABLE IF NOT EXISTS data
             experience INTEGER,
             salary double,
             duration INTEGER,
+            description TEXT,
             timestamp DATETIME DEFAULT CURRENT_TIMESTAMP
             );''')
 
@@ -38,10 +39,11 @@ for msg in consumer:
     experience = data['experience']
     salary = data['salary']
     duration = data['duration']
+    description = data['description']
     timestamp = data['timestamp']
 
-    conn.execute("INSERT INTO data (age, sex, experience, salary, duration, timestamp) VALUES (?, ?, ?, ?, ?, ?)",
-                 (age, sex, experience, salary, duration, timestamp))
+    conn.execute("INSERT INTO data (age, sex, experience, salary, duration, description, timestamp) VALUES (?, ?, ?, ?, ?,? , ?)",
+                 (age, sex, experience, salary, duration, description, timestamp))
     conn.commit()
 
     # In our case the employee is a barbech
@@ -51,6 +53,7 @@ for msg in consumer:
         "experience": experience,
         "salary": salary,
         "duration": duration,
+        "description": description,
         "timestamp": timestamp
     }
     print(employee)

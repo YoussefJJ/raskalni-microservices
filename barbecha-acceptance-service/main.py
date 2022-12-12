@@ -22,6 +22,7 @@ conn.execute('''CREATE TABLE IF NOT EXISTS employees
             experience INTEGER,
             salary double,
             duration INTEGER,
+            description TEXT,
             timestamp DATETIME DEFAULT CURRENT_TIMESTAMP,
             status TEXT CHECK ( status IN ('A', 'R') ) NOT NULL
             );''')
@@ -43,12 +44,13 @@ for msg in consumer:
     experience = data['experience']
     salary = data['salary']
     duration = data['duration']
+    description = data['description']
     timestamp = data['timestamp']
     status = 'A' if salary < 2000 else 'R'
 
     # # save object to database
-    conn.execute("INSERT INTO employees (age, sex, experience, salary, duration, timestamp, status) VALUES (?, ?, ?, ?, ?, ?, ?)",
-                 (age, sex, experience, salary, duration, timestamp, status))
+    conn.execute("INSERT INTO employees (age, sex, experience, salary, duration, description, timestamp, status) VALUES (?, ?, ?, ?, ?, ?, ?, ?)",
+                 (age, sex, experience, salary, duration, description, timestamp, status))
     conn.commit()
     if status == 'A':
         # In our case the employee is a barbech
@@ -58,6 +60,7 @@ for msg in consumer:
             "experience": experience,
             "salary": salary,
             "duration": duration,
+            "description": description,
             "timestamp": timestamp
         }
         producer.send('insurance-topic',
