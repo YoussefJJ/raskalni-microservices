@@ -1,3 +1,4 @@
 flask
 fpdf
 kafka-python
+flask_cors

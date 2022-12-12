@@ -3,8 +3,10 @@ import json
 from datetime import datetime
 from kafka import KafkaProducer
 from fpdf import FPDF
+from flask_cors import CORS
 
 app = Flask(__name__)
+CORS(app)
 
 # Create a Kafka producer to send data to a Kafka topic
 producer = KafkaProducer(bootstrap_servers='localhost:9092')
